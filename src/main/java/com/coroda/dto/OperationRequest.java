@@ -1,4 +1,4 @@
-package com.coroda.model;
+package com.coroda.dto;
 
 import lombok.Data;
 
