@@ -75,5 +75,5 @@ public class OperationController {
         log.info("Actualizacion Tipo de operacion ");
         return operationService.updateType(id, typeOperationRequest);
     }
-    
+
 }
