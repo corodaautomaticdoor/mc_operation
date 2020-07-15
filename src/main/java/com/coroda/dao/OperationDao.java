@@ -21,5 +21,5 @@ public interface OperationDao {
     Observable<OperationResponse> searchClient(String client);
     Observable<OperationResponse> getData(TypeOperation typeOperation, String client);
     Observable<TypeOperationResponse> updateType(Long id, TypeOperationRequest typeOperationRequest);
-    
+
 }
