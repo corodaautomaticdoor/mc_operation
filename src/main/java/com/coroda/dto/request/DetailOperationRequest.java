@@ -9,19 +9,19 @@ import java.math.BigDecimal;
 @ApiModel("Model DetailOperation")
 public class DetailOperationRequest {
 
-    @ApiModelProperty(value = "id")
-    private Long id;
-
-    @ApiModelProperty(value = "detailOperationId")
+    @ApiModelProperty(value = "detailOperationId", position = 1)
     private Long detailOperationId;
 
-    @ApiModelProperty(value = "description")
+    @ApiModelProperty(value = "id" , position = 2)
+    private Long id;
+
+    @ApiModelProperty(value = "description" , position = 3)
     private String description;
 
-    @ApiModelProperty(value = "quantity", required = true)
+    @ApiModelProperty(value = "quantity", required = true , position = 4)
     private BigDecimal quantity;
 
-    @ApiModelProperty(value = "priceUnit", required = true)
+    @ApiModelProperty(value = "priceUnit", required = true , position = 5)
     private BigDecimal priceUnit;
 
 
