@@ -1,16 +1,13 @@
 package com.coroda.mcoperation.model.api.response;
 
 
-import com.coroda.mcoperation.model.entity.DetailOperacion;
-import com.coroda.mcoperation.model.entity.TypeOperacion;
+import com.coroda.mcoperation.model.entity.TypeOperation;
 import com.coroda.mcoperation.model.thirdparty.Person;
 import lombok.AllArgsConstructor;
 import lombok.Data;
 import lombok.NoArgsConstructor;
 
 import java.math.BigDecimal;
-import java.text.SimpleDateFormat;
-import java.util.Date;
 import java.util.List;
 
 @Data
@@ -19,7 +16,7 @@ import java.util.List;
 public class Response {
 
     private Long operationId;
-    private TypeOperacion typeOperation;
+    private TypeOperation typeOperation;
     private String date;
     private String hora;
     private List<Person> person;

@@ -3,23 +3,19 @@ package com.coroda.mcoperation.model.entity;
 import lombok.Data;
 
 import javax.persistence.*;
-import java.math.BigDecimal;
-import java.text.SimpleDateFormat;
-import java.util.Date;
 import java.util.List;
-import java.util.TimeZone;
 
 @Data
 @Entity
-@Table(name = "operacion")
-public class Operacion {
+@Table(name = "operation")
+public class Operation {
 
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Long operationId;
 
     @Column(name = "typeOperation")
-    private TypeOperacion typeOperation;
+    private TypeOperation typeOperation;
 
     @Column(name = "date")
     private String date;
@@ -29,7 +25,7 @@ public class Operacion {
 
     @OneToMany(cascade = CascadeType.ALL, fetch = FetchType.EAGER)
     @JoinColumn(name = "id")
-    private List<DetailOperacion> detailOperacion;
+    private List<DetailOperation> detailOperacion;
 
 
 //    public BigDecimal getTotalAmount() {

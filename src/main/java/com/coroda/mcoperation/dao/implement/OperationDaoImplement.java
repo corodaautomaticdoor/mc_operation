@@ -1,13 +1,13 @@
 package com.coroda.mcoperation.dao.implement;
 
-import com.coroda.mcoperation.dao.OperacionDao;
+import com.coroda.mcoperation.dao.OperationDao;
 import com.coroda.mcoperation.model.api.request.*;
 import com.coroda.mcoperation.model.api.response.DetailResponse;
 import com.coroda.mcoperation.model.api.response.Response;
 import com.coroda.mcoperation.model.entity.*;
 import com.coroda.mcoperation.model.thirdparty.Person;
 import com.coroda.mcoperation.model.thirdparty.Product;
-import com.coroda.mcoperation.repository.OperacionRepository;
+import com.coroda.mcoperation.repository.OperationRepository;
 import io.reactivex.*;
 import io.reactivex.Observable;
 import io.reactivex.schedulers.Schedulers;
@@ -19,7 +19,6 @@ import org.springframework.stereotype.Repository;
 import org.springframework.web.client.RestTemplate;
 
 import javax.ws.rs.BadRequestException;
-import java.math.BigDecimal;
 import java.text.ParseException;
 import java.text.SimpleDateFormat;
 import java.util.*;
@@ -29,12 +28,12 @@ import java.util.stream.Collectors;
 @Repository
 @Slf4j
 @Data
-public class OperacionDaoImplement implements OperacionDao {
+public class OperationDaoImplement implements OperationDao {
     @Autowired
     private RestTemplate clienteRest;
 
     @Autowired
-    private OperacionRepository operacionRepository;
+    private OperationRepository operacionRepository;
 
 
     @Value("${service-product.ribbon.listOfServer}")
@@ -53,9 +52,9 @@ public class OperacionDaoImplement implements OperacionDao {
                 .toCompletable();
     }
 
-    private Operacion setOperacion(Request model) {
+    private Operation setOperacion(Request model) {
         log.info("seteo de datos de Quotation del metodo save");
-        Operacion op = new Operacion();
+        Operation op = new Operation();
         op.setOperationId(model.getOperationId());
         op.setTypeOperation(model.getTypeOperation());
         op.setDate(model.getDate());
@@ -64,15 +63,15 @@ public class OperacionDaoImplement implements OperacionDao {
         return op;
     }
 
-    private List<DetailOperacion> setlistaDetailOperacion(List<DetailRequest> listaDetail) {
+    private List<DetailOperation> setlistaDetailOperacion(List<DetailRequest> listaDetail) {
         log.info("seteo de datos de QuotationItems ");
         return listaDetail.stream()
                 .map(details -> setDetailOperacion(details))
                 .collect(Collectors.toList());
     }
 
-    private DetailOperacion setDetailOperacion(DetailRequest detail) {
-        DetailOperacion detailOp = new DetailOperacion();
+    private DetailOperation setDetailOperacion(DetailRequest detail) {
+        DetailOperation detailOp = new DetailOperation();
         detailOp.setId(detail.getId());
         detailOp.setModel(detail.getModel());
         detailOp.setDetailOperationId(detail.getDetailOperationId());
@@ -98,7 +97,7 @@ public class OperacionDaoImplement implements OperacionDao {
                 .map(Operacion -> getOperation(Operacion))
                 .toSingle();
     }
-    private Maybe<Operacion> maybeOperation(Long operationId) {
+    private Maybe<Operation> maybeOperation(Long operationId) {
         log.info("buscando por id y obteniendo los campos");
         return Maybe.just(
                 operacionRepository.findById(operationId)
@@ -106,7 +105,7 @@ public class OperacionDaoImplement implements OperacionDao {
                 .switchIfEmpty(Maybe.empty());
     }
 
-    private Response getOperation(Operacion model) throws ParseException {
+    private Response getOperation(Operation model) throws ParseException {
         log.info("Extrayendo reistros de OPERACION");
         Response op = new Response();
         op.setOperationId(model.getOperationId());
@@ -142,13 +141,13 @@ public class OperacionDaoImplement implements OperacionDao {
         return Arrays.asList(person);
     }
 
-    private List<DetailResponse> getlistaDetail(List<DetailOperacion> listaDetail) {
+    private List<DetailResponse> getlistaDetail(List<DetailOperation> listaDetail) {
         return listaDetail.stream()
                 .map(details -> getDetail(details))
                 .collect(Collectors.toList());
     }
 
-    private DetailResponse getDetail(DetailOperacion detail) {
+    private DetailResponse getDetail(DetailOperation detail) {
         DetailResponse dr = new DetailResponse();
         log.info("Extrayendo reistros de DETAIL");
         dr.setDetailOperationId(detail.getDetailOperationId());

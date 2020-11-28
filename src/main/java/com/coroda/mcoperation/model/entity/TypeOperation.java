@@ -1,6 +1,6 @@
 package com.coroda.mcoperation.model.entity;
 
-public enum TypeOperacion {
+public enum TypeOperation {
     Quotation,
     Sale,
     Delete

@@ -6,7 +6,7 @@ import io.reactivex.Completable;
 import io.reactivex.Observable;
 import io.reactivex.Single;
 
-public interface OperacionDao {
+public interface OperationDao {
 
     Completable saveretrofit(Request request);
 

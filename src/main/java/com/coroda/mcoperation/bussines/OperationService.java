@@ -7,7 +7,7 @@ import io.reactivex.Observable;
 import io.reactivex.Single;
 
 
-public interface OperacionService {
+public interface OperationService {
 
     Completable saveretrofit (Request request);
 

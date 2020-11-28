@@ -1,6 +1,6 @@
 package com.coroda.expose.web;
 
-import com.coroda.mcoperation.bussines.OperacionService;
+import com.coroda.mcoperation.bussines.OperationService;
 import com.coroda.mcoperation.model.api.request.Request;
 import com.coroda.mcoperation.model.api.response.Response;
 import com.coroda.mcoperation.util.Constants;
@@ -16,10 +16,10 @@ import org.springframework.web.bind.annotation.*;
 @RequestMapping(Constants.MAIN_PATH)
 @Api(tags = "Microservicio Operation", description = "Esta API se encarga de la gestion de las Operaciones")
 @Slf4j
-public class OperacionController {
+public class OperationController {
 
     @Autowired
-    OperacionService operacionService;
+    OperationService operacionService;
 
     @PostMapping
     @ApiOperation(value = Constants.SAVE_VALUE, notes = Constants.SAVE_NOTE)

@@ -9,11 +9,11 @@ import javax.persistence.*;
 import java.math.BigDecimal;
 
 @Entity
-@Table(name = "detail_operacion")
+@Table(name = "detail_operation")
 @Data
 @AllArgsConstructor
 @NoArgsConstructor
-public class DetailOperacion {
+public class DetailOperation {
 
     @Column(name = "id")
     private Long id;
