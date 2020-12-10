@@ -2,7 +2,7 @@ package com.coroda.mcoperation.util;
 
 public class Constants {
 
-    public final static String MAIN_PATH = "/operacion";
+    public final static String MAIN_PATH = "/operation";
     public final static String ID = "/{id}";
     public final static String TYPE = "/type/{id}";
 
