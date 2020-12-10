@@ -20,9 +20,8 @@ public class Response {
     private String date;
     private String hora;
     private List<Person> person;
+        private List<DetailResponse> detail;
     private BigDecimal totalAmount;
-
-    private List<DetailResponse> detail;
 
       public BigDecimal getTotalAmount() {
         BigDecimal total = new BigDecimal(0.0).setScale(2);
