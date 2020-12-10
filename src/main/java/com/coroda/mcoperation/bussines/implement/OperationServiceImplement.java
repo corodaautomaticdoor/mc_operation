@@ -45,7 +45,6 @@ public class OperationServiceImplement implements OperationService {
     @Override
     public Observable<Response> getData(Map<String, String> params) {
         log.info("Busqueda Dinamica");
-        log.info("params "+params);
         Observable<Response> operationResponseObservable = null;
         String numberDocument;
         TypeOperation type;

@@ -27,7 +27,7 @@ public class OperationController {
 
     @PostMapping
     @ApiOperation(value = Constants.SAVE_VALUE, notes = Constants.SAVE_NOTE)
-    public Completable saveretrofit(@RequestBody Request request) {
+    public Completable save(@RequestBody Request request) {
         log.info("Envio de parametros");
         return operationService.save(request);
     }
@@ -57,7 +57,6 @@ public class OperationController {
     @ApiOperation(value = Constants.GETDATA_VALUE, notes = Constants.GETDATA_NOTE)
     public Observable<Response> getData(@RequestParam Map<String, String> params) {
         log.info("Enviando parametros de busqueda");
-        log.info("params "+params);
         return operationService.getData(params);
     }
 

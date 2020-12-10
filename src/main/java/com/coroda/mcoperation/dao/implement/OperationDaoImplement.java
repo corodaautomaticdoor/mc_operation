@@ -25,7 +25,6 @@ import java.text.SimpleDateFormat;
 import java.util.*;
 import java.util.stream.Collectors;
 
-//@AllArgsConstructor
 @Repository
 @Slf4j
 @Data
@@ -124,17 +123,6 @@ public class OperationDaoImplement implements OperationDao {
                 .subscribeOn(Schedulers.io());
     }
 
-
-
-//    ELIMINAR
-////    @Override
-////    public Single<Response> getById(Long operationId) {
-////        return maybeOperation(operationId)
-////                .map(Operacion -> getOperation(Operacion))
-////                .toSingle();
-////    }
-
-
     private Response getOperation(Operation model) throws ParseException {
         log.info("Extrayendo reistros de OPERACION");
         Response op = new Response();
@@ -143,7 +131,6 @@ public class OperationDaoImplement implements OperationDao {
         op.setDate(getFecha(model.getDate()));
         op.setHora(getHora(model.getDate()));
         op.setPerson(getListPerson(model.getNumberDocument()));
-//        op.setTotalAmount(model.getTotalAmount());
         op.setDetail(getlistaDetail(model.getDetailOperacion()));
         return op;
     }
@@ -161,13 +148,10 @@ public class OperationDaoImplement implements OperationDao {
     }
 
     public List<Person> getListPerson(Long numberDocument) {
-        log.info("enviando numberDocument de persona "+numberDocument);
-
         Map<String,String> pathVariables3= new HashMap<String,String>();
         pathVariables3.put("numberDocument",numberDocument.toString());
-        log.info("actualizando  numberDocument de persona "+pathVariables3);
+        log.info("Extrayendo registros de Cliente");
         Person[] person= clienteRest.getForObject(dataPerson, Person[].class,pathVariables3);
-        log.info("datos de persona "+person);
         return Arrays.asList(person);
     }
 
@@ -179,26 +163,25 @@ public class OperationDaoImplement implements OperationDao {
 
     private DetailResponse getDetail(DetailOperation detail) {
         DetailResponse dr = new DetailResponse();
-        log.info("Extrayendo reistros de DETAIL");
+        log.info("Extrayendo registros de Detalle");
         dr.setDetailOperationId(detail.getDetailOperationId());
         dr.setId(detail.getId());
         dr.setProduct(getProduct(detail.getModel()));
         dr.setQuantity(detail.getQuantity());
-//        dr.setTotalDetailAmount(detail.getTotalDetail());
         return dr;
     }
 
     public List<Product> getProduct(String model) {
         Map<String,String> modelProduct= new HashMap<String,String>();
         modelProduct.put("model",model);
-        log.info("Extrayendo reistros de PRODUCTO");
+        log.info("Extrayendo registros de Productos");
         Product[] product= clienteRest.getForObject(mcProduct,Product[].class,modelProduct);
         return Arrays.asList(product);
     }
 
     @Override
     public Observable<Response> searchTypeOperation(TypeOperation typeOperation) {
-        log.info("Extrayendo reistros acorde al tipo de Operacion");
+        log.info("Extrayendo registros acorde al tipo de Operacion");
         return Observable.fromIterable(operationRepository.searchTypeOperation(typeOperation))
                 .filter(objType -> objType.getTypeOperation().equals(typeOperation))
                 .map(operation -> getOperation(operation))
@@ -217,7 +200,7 @@ public class OperationDaoImplement implements OperationDao {
 
     @Override
     public Observable<Response> getData(TypeOperation typeOperation, String numberDocument) {
-        log.info("Extrayendo reistros del Tipo de Operacion acorde al cliente");
+        log.info("Extrayendo registros del Tipo de Operacion acorde al cliente");
         long number = Long.parseLong(numberDocument);
         return Observable.fromIterable(operationRepository.getData(typeOperation, number))
                 .map(operation -> getOperation(operation))
