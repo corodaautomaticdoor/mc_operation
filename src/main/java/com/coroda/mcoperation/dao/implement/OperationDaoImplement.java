@@ -4,6 +4,7 @@ import com.coroda.mcoperation.dao.OperationDao;
 import com.coroda.mcoperation.model.api.request.*;
 import com.coroda.mcoperation.model.api.response.DetailResponse;
 import com.coroda.mcoperation.model.api.response.Response;
+import com.coroda.mcoperation.model.api.response.TypeOperationResponse;
 import com.coroda.mcoperation.model.entity.*;
 import com.coroda.mcoperation.model.thirdparty.Person;
 import com.coroda.mcoperation.model.thirdparty.Product;
@@ -29,12 +30,12 @@ import java.util.stream.Collectors;
 @Slf4j
 @Data
 public class OperationDaoImplement implements OperationDao {
+
     @Autowired
     private RestTemplate clienteRest;
 
     @Autowired
-    private OperationRepository operacionRepository;
-
+    private OperationRepository operationRepository;
 
     @Value("${service-product.ribbon.listOfServer}")
     private String mcProduct;
@@ -45,11 +46,35 @@ public class OperationDaoImplement implements OperationDao {
 
 
     @Override
-    public Completable saveretrofit(Request request) {
+    public Completable save(Request request) {
         log.info("Guardando datos de la Operacion");
         return Single.fromCallable(() -> setOperacion(request))
-                .map(operacionRepository::save)
+                .map(operationRepository::save)
                 .toCompletable();
+    }
+
+    @Override
+    public Completable delete(Long operationId) {
+        return maybeOperation(operationId)
+                .flatMapCompletable(Operation ->
+                {
+                    operationRepository.deleteById(operationId);
+                    return CompletableObserver::onComplete;
+                });
+    }
+
+    private Maybe<Operation> maybeOperation(Long operationId) {
+        log.info("buscando por id y obteniendo los campos");
+        return Maybe.just(
+                operationRepository.findById(operationId)
+                        .<BadRequestException>orElseThrow(BadRequestException::new))
+                .switchIfEmpty(Maybe.empty());
+    }
+    @Override
+    public Completable update(Request request) {
+        log.info("actualizando y guardando los campos");
+        return maybeOperation(request.getOperationId())
+                .flatMapCompletable(operation -> save(request));
     }
 
     private Operation setOperacion(Request model) {
@@ -83,27 +108,32 @@ public class OperationDaoImplement implements OperationDao {
 
 
     @Override
-    public Observable<Response>  searchOperacion(Long operationId) {
+    public Observable<Response>  getById(Long operationId) {
         log.info("Extrayendo reistros del Producto  acorde al modelo");
-        return Observable.fromIterable(operacionRepository.searchId(operationId))
+        return Observable.fromIterable(operationRepository.searchId(operationId))
                 .filter(obj -> obj.getOperationId().equals(operationId))
                 .map(operacion -> getOperation(operacion))
                 .subscribeOn(Schedulers.io());
     }
 
     @Override
-    public Single<Response> getById(Long operationId) {
-        return maybeOperation(operationId)
-                .map(Operacion -> getOperation(Operacion))
-                .toSingle();
+    public Observable<Response> findAll() {
+        log.info("seteo de todos los datos registrados");
+        return Observable.fromIterable(operationRepository.findAll())
+                .map(Operation -> getOperation(Operation))
+                .subscribeOn(Schedulers.io());
     }
-    private Maybe<Operation> maybeOperation(Long operationId) {
-        log.info("buscando por id y obteniendo los campos");
-        return Maybe.just(
-                operacionRepository.findById(operationId)
-                        .<BadRequestException>orElseThrow(BadRequestException::new))
-                .switchIfEmpty(Maybe.empty());
-    }
+
+
+
+//    ELIMINAR
+////    @Override
+////    public Single<Response> getById(Long operationId) {
+////        return maybeOperation(operationId)
+////                .map(Operacion -> getOperation(Operacion))
+////                .toSingle();
+////    }
+
 
     private Response getOperation(Operation model) throws ParseException {
         log.info("Extrayendo reistros de OPERACION");
@@ -166,5 +196,41 @@ public class OperationDaoImplement implements OperationDao {
         return Arrays.asList(product);
     }
 
+    @Override
+    public Observable<Response> searchTypeOperation(TypeOperation typeOperation) {
+        log.info("Extrayendo reistros acorde al tipo de Operacion");
+        return Observable.fromIterable(operationRepository.searchTypeOperation(typeOperation))
+                .filter(objType -> objType.getTypeOperation().equals(typeOperation))
+                .map(operation -> getOperation(operation))
+                .subscribeOn(Schedulers.io());
+    }
 
+    @Override
+    public Observable<Response> searchClient(String numberDocument) {
+        log.info("Extrayendo registros de la Operacion  acorde al cliente");
+        long number = Long.parseLong(numberDocument);
+        return Observable.fromIterable(operationRepository.searchClient(number))
+                .filter(objClient -> objClient.getNumberDocument().equals(number))
+                .map(operation -> getOperation(operation))
+                .subscribeOn(Schedulers.io());
+    }
+
+    @Override
+    public Observable<Response> getData(TypeOperation typeOperation, String numberDocument) {
+        log.info("Extrayendo reistros del Tipo de Operacion acorde al cliente");
+        long number = Long.parseLong(numberDocument);
+        return Observable.fromIterable(operationRepository.getData(typeOperation, number))
+                .map(operation -> getOperation(operation))
+                .subscribeOn(Schedulers.io());
+    }
+
+    @Override
+    public Observable<TypeOperationResponse> updateType(Long id, TypeOperationRequest typeOperationRequest) {
+        TypeOperationResponse typeOperationResponse = new TypeOperationResponse();
+        typeOperationResponse.setUpdate(operationRepository.updateType(id, typeOperationRequest.getTypeOperation()));
+        log.info("Actualizando el tipo de Operacion");
+        return Observable.just(typeOperationResponse)
+                .map(x -> x)
+                .subscribeOn(Schedulers.io());
+    }
 }
