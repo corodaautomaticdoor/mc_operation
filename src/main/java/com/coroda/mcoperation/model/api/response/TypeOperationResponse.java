@@ -7,6 +7,6 @@ import lombok.Setter;
 @Data
 @Getter
 @Setter
-public class TypeOperationResponse {
+public class TypeOperationResponse1 {
     int update;
 }
