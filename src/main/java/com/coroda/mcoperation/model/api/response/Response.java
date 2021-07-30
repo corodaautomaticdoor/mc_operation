@@ -20,7 +20,7 @@ public class Response {
     private String date;
     private String hora;
     private List<Person> person;
-        private List<DetailResponse> detail;
+    private List<DetailResponse> detail;
     private BigDecimal totalAmount;
 
       public BigDecimal getTotalAmount() {
