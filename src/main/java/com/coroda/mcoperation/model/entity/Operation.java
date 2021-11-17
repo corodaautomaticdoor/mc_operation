@@ -27,13 +27,4 @@ public class Operation {
     @JoinColumn(name = "id")
     private List<DetailOperation> detailOperacion;
 
-
-//    public BigDecimal getTotalAmount() {
-//        BigDecimal total = new BigDecimal(0.0).setScale(2);
-//        for (DetailOperacion item : detailOperacion) {
-//            total = total.add(item.getTotalDetail().setScale(2));
-//        }
-//        return total;
-//    }
-
 }

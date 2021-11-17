@@ -103,9 +103,6 @@ public class OperationDaoImplement implements OperationDao {
         return detailOp;
     }
 
-
-
-
     @Override
     public Observable<Response>  getById(Long operationId) {
         log.info("Extrayendo reistros del Producto  acorde al modelo");
@@ -136,15 +133,11 @@ public class OperationDaoImplement implements OperationDao {
     }
     public String getFecha(String date) throws ParseException {
         Date fecha = new SimpleDateFormat("dd-MM-yyyy hh:mm:ss").parse(date);
-        String Fecha = new SimpleDateFormat("dd-MM-yyyy").format(fecha);
-        String f = Fecha.toString();
-        return f;
+        return new SimpleDateFormat("EEEE dd 'de' MMMM 'del' YYYY").format(fecha);
     }
     public String getHora(String date) throws ParseException {
         Date hora = new SimpleDateFormat("dd-MM-yyyy hh:mm:ss").parse(date);
-        String Hora = new SimpleDateFormat("hh:mm:ss").format(hora);
-        String h = Hora.toString();
-        return h;
+        return new SimpleDateFormat("hh:mm:ss a").format(hora);
     }
 
     public Person getListPerson(Long numberDocument) {
