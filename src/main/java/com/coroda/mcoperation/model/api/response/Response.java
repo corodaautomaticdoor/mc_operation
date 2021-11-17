@@ -19,7 +19,7 @@ public class Response {
     private TypeOperation typeOperation;
     private String date;
     private String hora;
-    private List<Person> person;
+    private Person person;
     private List<DetailResponse> detail;
     private BigDecimal totalAmount;
 

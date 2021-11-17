@@ -147,12 +147,12 @@ public class OperationDaoImplement implements OperationDao {
         return h;
     }
 
-    public List<Person> getListPerson(Long numberDocument) {
+    public Person getListPerson(Long numberDocument) {
         Map<String,String> pathVariables3= new HashMap<String,String>();
         pathVariables3.put("numberDocument",numberDocument.toString());
         log.info("Extrayendo registros de Cliente");
-        Person[] person= clienteRest.getForObject(dataPerson, Person[].class,pathVariables3);
-        return Arrays.asList(person);
+        Person person= clienteRest.getForObject(dataPerson, Person.class,pathVariables3);
+        return person;
     }
 
     private List<DetailResponse> getlistaDetail(List<DetailOperation> listaDetail) {
