@@ -13,9 +13,9 @@ import java.util.List;
 @NoArgsConstructor
 public class DetailResponse {
 
-    private Long detailOperationId;
-    private Long id;
+    private Long detailId;
     private List<Product> product;
+    private List<NewStyleResponse> newStyle;
     private BigDecimal quantity;
     private BigDecimal totalDetailAmount;
 

@@ -3,6 +3,7 @@ package com.coroda.mcoperation.dao.implement;
 import com.coroda.mcoperation.dao.OperationDao;
 import com.coroda.mcoperation.model.api.request.*;
 import com.coroda.mcoperation.model.api.response.DetailResponse;
+import com.coroda.mcoperation.model.api.response.NewStyleResponse;
 import com.coroda.mcoperation.model.api.response.Response;
 import com.coroda.mcoperation.model.api.response.TypeOperationResponse;
 import com.coroda.mcoperation.model.entity.*;
@@ -72,14 +73,14 @@ public class OperationDaoImplement implements OperationDao {
     @Override
     public Completable update(Request request) {
         log.info("actualizando y guardando los campos");
-        return maybeOperation(request.getOperationId())
+        return maybeOperation(request.getId())
                 .flatMapCompletable(operation -> save(request));
     }
 
     private Operation setOperacion(Request model) {
         log.info("seteo de datos de Quotation del metodo save");
         Operation op = new Operation();
-        op.setOperationId(model.getOperationId());
+        op.setId(model.getId());
         op.setTypeOperation(model.getTypeOperation());
         op.setDate(model.getDate());
         op.setNumberDocument(model.getNumberDocument());
@@ -96,18 +97,35 @@ public class OperationDaoImplement implements OperationDao {
 
     private DetailOperation setDetailOperacion(DetailRequest detail) {
         DetailOperation detailOp = new DetailOperation();
-        detailOp.setId(detail.getId());
+        detailOp.setOperationId(detail.getOperationId());
         detailOp.setModel(detail.getModel());
-        detailOp.setDetailOperationId(detail.getDetailOperationId());
+        detailOp.setId(detail.getId());
         detailOp.setQuantity(detail.getQuantity());
+        detailOp.setNewStyleProduct(setNewStyleProduct(detail.getNewStyleProduct()));
         return detailOp;
+    }
+
+    private List<NewStyleProduct> setNewStyleProduct(List<NewStyleRequest> newStyle) {
+        log.info("seteo de datos de nuevo estilo del producto ");
+        return newStyle.stream()
+                .map(style -> setNewStyle(style))
+                .collect(Collectors.toList());
+    }
+
+    private NewStyleProduct setNewStyle(NewStyleRequest style) {
+        NewStyleProduct newStyle = new NewStyleProduct();
+        newStyle.setDetailOperationId(style.getId());
+        newStyle.setId(style.getId());
+        newStyle.setColor(style.getColor());
+        newStyle.setDimention(style.getDimention());
+        return newStyle;
     }
 
     @Override
     public Observable<Response>  getById(Long operationId) {
         log.info("Extrayendo reistros del Producto  acorde al modelo");
         return Observable.fromIterable(operationRepository.searchId(operationId))
-                .filter(obj -> obj.getOperationId().equals(operationId))
+                .filter(obj -> obj.getId().equals(operationId))
                 .map(operacion -> getOperation(operacion))
                 .subscribeOn(Schedulers.io());
     }
@@ -123,7 +141,7 @@ public class OperationDaoImplement implements OperationDao {
     private Response getOperation(Operation model) throws ParseException {
         log.info("Extrayendo reistros de OPERACION");
         Response op = new Response();
-        op.setOperationId(model.getOperationId());
+        op.setOperationId(model.getId());
         op.setTypeOperation(model.getTypeOperation());
         op.setDate(getFecha(model.getDate()));
         op.setHora(getHora(model.getDate()));
@@ -157,9 +175,9 @@ public class OperationDaoImplement implements OperationDao {
     private DetailResponse getDetail(DetailOperation detail) {
         DetailResponse dr = new DetailResponse();
         log.info("Extrayendo registros de Detalle");
-        dr.setDetailOperationId(detail.getDetailOperationId());
-        dr.setId(detail.getId());
+        dr.setDetailId(detail.getId());
         dr.setProduct(getProduct(detail.getModel()));
+        dr.setNewStyle(getNewStyle(detail.getNewStyleProduct()));
         dr.setQuantity(detail.getQuantity());
         return dr;
     }
@@ -170,6 +188,18 @@ public class OperationDaoImplement implements OperationDao {
         log.info("Extrayendo registros de Productos");
         Product[] product= clienteRest.getForObject(mcProduct,Product[].class,modelProduct);
         return Arrays.asList(product);
+    }
+
+    public List<NewStyleResponse> getNewStyle(List<NewStyleProduct> list) {
+        return list.stream()
+                .map(newStyleProduct -> newStyle(newStyleProduct))
+                .collect(Collectors.toList());
+    }
+    public NewStyleResponse newStyle(NewStyleProduct style) {
+        NewStyleResponse nr = new NewStyleResponse();
+        nr.setColor(style.getColor());
+        nr.setDimention(style.getDimention());
+        return nr;
     }
 
     @Override

@@ -1,12 +1,12 @@
 package com.coroda.mcoperation.model.entity;
 
-import com.coroda.mcoperation.model.thirdparty.Product;
 import lombok.AllArgsConstructor;
 import lombok.Data;
 import lombok.NoArgsConstructor;
 
 import javax.persistence.*;
 import java.math.BigDecimal;
+import java.util.List;
 
 @Entity
 @Table(name = "detail_operation")
@@ -15,13 +15,13 @@ import java.math.BigDecimal;
 @NoArgsConstructor
 public class DetailOperation {
 
-    @Column(name = "id")
-    private Long id;
+    @Column(name = "operationId")
+    private Long operationId;
 
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
-    @Column(name = "detailOperationId")
-    private Long detailOperationId;
+    @Column(name = "id")
+    private Long id;
 
     @Column(name = "model")
     private String model;
@@ -29,11 +29,8 @@ public class DetailOperation {
     @Column(name = "quantity")
     private BigDecimal quantity;
 
-//    @Column(name = "price")
-//    private BigDecimal priceUnit;
-
-//    public BigDecimal getTotalDetail() {
-//        return priceUnit.multiply(quantity).setScale(2);
-//    }
+    @OneToMany(cascade = CascadeType.ALL, fetch = FetchType.EAGER)
+    @JoinColumn(name = "detailOperationId")
+    private List<NewStyleProduct>  newStyleProduct;
 
 }

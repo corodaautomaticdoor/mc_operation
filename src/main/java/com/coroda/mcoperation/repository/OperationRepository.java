@@ -13,7 +13,7 @@ import java.util.List;
 
 @Repository
 public interface OperationRepository extends JpaRepository<Operation, Long> {
-    @Query("from Operation o where o.operationId =:operationId")
+    @Query("from Operation o where o.id =:operationId")
     List<Operation> searchId (@Param("operationId")Long operationId);
 
     @Query(" from Operation o where o.typeOperation =:typeOperation")
@@ -27,6 +27,6 @@ public interface OperationRepository extends JpaRepository<Operation, Long> {
 
     @Transactional
     @Modifying
-    @Query(value = "update Operation o set o.typeOperation =:typeOperation WHERE o.operationId = :id")
+    @Query(value = "update Operation o set o.typeOperation =:typeOperation WHERE o.id = :id")
     int updateType(Long id, TypeOperation typeOperation);
 }

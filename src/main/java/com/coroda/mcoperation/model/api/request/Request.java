@@ -16,20 +16,17 @@ import java.util.List;
 @ApiModel("Model Request")
 public class Request {
 
-    @ApiModelProperty(value = "operationId", position = 1)
-    private Long operationId;
+    @ApiModelProperty(value = "id", position = 1)
+    private Long id;
 
     @ApiModelProperty(value = "typeOperation", required = true , position = 2)
     private TypeOperation typeOperation;
 
-//    @ApiModelProperty(value = "date", required = true , position = 3)
-//    private String date;
-
-    @ApiModelProperty(value = "numberDocument", required = true , position = 4)
+    @ApiModelProperty(value = "numberDocument", required = true , position = 3)
     private Long numberDocument;
 
     @OneToMany(cascade = CascadeType.ALL, fetch = FetchType.EAGER)
-    @ApiModelProperty(position = 5)
+    @ApiModelProperty(position = 4)
     private List<DetailRequest> detail;
 
     public String getDate(){

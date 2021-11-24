@@ -12,7 +12,7 @@ public class Operation {
 
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
-    private Long operationId;
+    private Long id;
 
     @Column(name = "typeOperation")
     private TypeOperation typeOperation;
@@ -24,7 +24,7 @@ public class Operation {
     private Long numberDocument;
 
     @OneToMany(cascade = CascadeType.ALL, fetch = FetchType.EAGER)
-    @JoinColumn(name = "id")
+    @JoinColumn(name = "operationId")
     private List<DetailOperation> detailOperacion;
 
 }
