@@ -33,4 +33,10 @@ public class DetailOperation {
     @JoinColumn(name = "detailOperationId")
     private List<NewStyleProduct>  newStyleProduct;
 
+    @Column(name = "priceUnit")
+    private BigDecimal priceUnit;
+
+    @Column(name = "totalProductPrice")
+    private BigDecimal totalProductPrice;
+
 }

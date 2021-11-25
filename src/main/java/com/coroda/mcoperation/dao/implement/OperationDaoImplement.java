@@ -21,6 +21,7 @@ import org.springframework.stereotype.Repository;
 import org.springframework.web.client.RestTemplate;
 
 import javax.ws.rs.BadRequestException;
+import java.math.BigDecimal;
 import java.text.ParseException;
 import java.text.SimpleDateFormat;
 import java.util.*;
@@ -102,6 +103,8 @@ public class OperationDaoImplement implements OperationDao {
         detailOp.setId(detail.getId());
         detailOp.setQuantity(detail.getQuantity());
         detailOp.setNewStyleProduct(setNewStyleProduct(detail.getNewStyleProduct()));
+        detailOp.setPriceUnit(getPriceUnitProduct(detail.getModel(),detail.getPriceUnit()));
+        detailOp.setTotalProductPrice(calculateTotalProductPrice(detail.getQuantity(),getPriceUnitProduct(detail.getModel(),detail.getPriceUnit())));
         return detailOp;
     }
 
@@ -176,9 +179,12 @@ public class OperationDaoImplement implements OperationDao {
         DetailResponse dr = new DetailResponse();
         log.info("Extrayendo registros de Detalle");
         dr.setDetailId(detail.getId());
+        dr.setOperationId(detail.getOperationId());
         dr.setProduct(getProduct(detail.getModel()));
         dr.setNewStyle(getNewStyle(detail.getNewStyleProduct()));
         dr.setQuantity(detail.getQuantity());
+        dr.setPriceUnit(detail.getPriceUnit());
+        dr.setTotalDetailAmount(detail.getTotalProductPrice());
         return dr;
     }
 
@@ -197,6 +203,8 @@ public class OperationDaoImplement implements OperationDao {
     }
     public NewStyleResponse newStyle(NewStyleProduct style) {
         NewStyleResponse nr = new NewStyleResponse();
+        nr.setNewStyleId(style.getId());
+        nr.setDetailOperationId(style.getDetailOperationId());
         nr.setColor(style.getColor());
         nr.setDimention(style.getDimention());
         return nr;
@@ -238,5 +246,31 @@ public class OperationDaoImplement implements OperationDao {
         return Observable.just(typeOperationResponse)
                 .map(x -> x)
                 .subscribeOn(Schedulers.io());
+    }
+
+
+
+    public BigDecimal getPriceUnitProduct(String model, BigDecimal priceUnit) {
+        Map<String,String> modelProduct= new HashMap<String,String>();
+        modelProduct.put("model",model);
+        log.info("Extrayendo precio unitario del Producto");
+        Product[] product= clienteRest.getForObject(mcProduct,Product[].class,modelProduct);
+        if(priceUnit != null ){
+            return priceUnit;
+        }
+        return Arrays.asList(product).stream().findFirst().get().getPriceUnit();
+    }
+
+//    public BigDecimal calculateTotalAmount() {
+//        BigDecimal totalDetail = new BigDecimal(0.0).setScale(2);
+//        for (Product item : product) {
+//            totalDetail = quantity.multiply(item.getPriceUnit()).setScale(2);
+//        }
+//        return totalDetail;
+//    }
+
+    public BigDecimal calculateTotalProductPrice(BigDecimal quantity, BigDecimal priceUnitProduct) {
+        BigDecimal totalDetail = new BigDecimal(0.0).setScale(2);
+        return  quantity.multiply(priceUnitProduct).setScale(2);
     }
 }

@@ -14,16 +14,11 @@ import java.util.List;
 public class DetailResponse {
 
     private Long detailId;
+    private Long operationId;
     private List<Product> product;
     private List<NewStyleResponse> newStyle;
     private BigDecimal quantity;
+    private BigDecimal priceUnit;
     private BigDecimal totalDetailAmount;
 
-    public BigDecimal getTotalDetailAmount() {
-        BigDecimal totalDetail = new BigDecimal(0.0).setScale(2);
-        for (Product item : product) {
-            totalDetail = quantity.multiply(item.getPriceUnit()).setScale(2);
-        }
-        return totalDetail;
-    }
 }

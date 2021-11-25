@@ -4,6 +4,7 @@ public class Constants {
 
     public final static String MAIN_PATH = "/operation";
     public final static String ID = "/{id}";
+    public final static String UPDATE_QUOTATION = "/quotation/{id}";
     public final static String TYPE = "/type/{id}";
 
     public final static String SUCCESS = "SUCCESS";

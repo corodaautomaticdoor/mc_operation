@@ -7,26 +7,14 @@ import java.math.BigDecimal;
 public class Product {
 
     private Long id;
-
     private String category;
-
     private String subCategory;
-
     private String model;
-
     private String brand;
-
     private String description;
-
     private String origin;
-
     private String material;
-
     private String dimensions;
-
     private String color;
-
-    private BigDecimal priceUnit;
-
     private String image;
 }

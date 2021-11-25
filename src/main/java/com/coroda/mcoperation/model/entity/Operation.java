@@ -3,6 +3,7 @@ package com.coroda.mcoperation.model.entity;
 import lombok.Data;
 
 import javax.persistence.*;
+import java.math.BigDecimal;
 import java.util.List;
 
 @Data
@@ -26,5 +27,8 @@ public class Operation {
     @OneToMany(cascade = CascadeType.ALL, fetch = FetchType.EAGER)
     @JoinColumn(name = "operationId")
     private List<DetailOperation> detailOperacion;
+
+    @Column(name = "totalAmount")
+    private BigDecimal totalAmount;
 
 }

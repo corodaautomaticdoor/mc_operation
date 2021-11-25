@@ -67,4 +67,10 @@ public class OperationController {
         return operationService.updateType(id, typeOperationRequest);
     }
 
+    @PutMapping(Constants.UPDATE_QUOTATION)
+    @ApiOperation(value = Constants.UPDATE_ID_VALUE, notes = Constants.UPDATE_ID_NOTE)
+    public Completable update2(@RequestBody Request request) {
+        log.info("Actualizacion de parametros");
+        return operationService.update(request);
+    }
 }

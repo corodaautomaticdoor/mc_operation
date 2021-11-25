@@ -8,8 +8,8 @@ import lombok.NoArgsConstructor;
 @AllArgsConstructor
 @NoArgsConstructor
 public class NewStyleResponse {
+    private Long newStyleId;
+    private Long detailOperationId;
     private String color;
     private String dimention;
-
-
 }
