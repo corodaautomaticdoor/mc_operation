@@ -19,8 +19,8 @@ public class NewStyleProduct {
 
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
-    @Column(name = "id")
-    private Long id;
+    @Column(name = "newStyleId")
+    private Long newStyleId;
 
     @Column(name = "color")
     private String color;

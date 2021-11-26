@@ -13,7 +13,7 @@ public class Operation {
 
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
-    private Long id;
+    private Long operationId;
 
     @Column(name = "typeOperation")
     private TypeOperation typeOperation;

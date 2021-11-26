@@ -15,8 +15,9 @@ public class DetailResponse {
 
     private Long detailId;
     private Long operationId;
-    private List<Product> product;
-    private List<NewStyleResponse> newStyle;
+    private String model;
+    private List<ProductResponse> product;
+    private List<NewStyleResponse> newStyleProduct;
     private BigDecimal quantity;
     private BigDecimal priceUnit;
     private BigDecimal totalDetailAmount;

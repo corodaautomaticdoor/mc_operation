@@ -1,21 +1,19 @@
-package com.coroda.mcoperation.model.thirdparty;
+package com.coroda.mcoperation.model.api.response;
 
 import lombok.Data;
 
-import java.math.BigDecimal;
 @Data
-public class Product {
+public class ProductResponse {
 
-    private Long id;
+//    private Long id;
     private String category;
     private String subCategory;
-    private String model;
+//    private String model;
     private String brand;
     private String description;
     private String origin;
     private String material;
     private String dimensions;
     private String color;
-    private BigDecimal priceUnit;
     private String image;
 }

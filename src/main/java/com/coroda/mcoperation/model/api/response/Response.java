@@ -18,8 +18,9 @@ public class Response {
     private Long operationId;
     private TypeOperation typeOperation;
     private String date;
-    private String hora;
-    private Person person;
+    private String hour;
+    private Long numberDocument;
+    private Person client;
     private List<DetailResponse> detail;
     private BigDecimal totalAmount;
 

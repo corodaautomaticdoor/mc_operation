@@ -16,8 +16,8 @@ import java.util.List;
 @ApiModel("Model Request")
 public class Request {
 
-    @ApiModelProperty(value = "id", position = 1)
-    private Long id;
+    @ApiModelProperty(value = "operationId", position = 1)
+    private Long operationId;
 
     @ApiModelProperty(value = "typeOperation", required = true , position = 2)
     private TypeOperation typeOperation;

@@ -20,8 +20,8 @@ public class DetailOperation {
 
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
-    @Column(name = "id")
-    private Long id;
+    @Column(name = "detailId")
+    private Long detailId;
 
     @Column(name = "model")
     private String model;

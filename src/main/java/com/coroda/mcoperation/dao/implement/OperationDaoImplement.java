@@ -2,10 +2,7 @@ package com.coroda.mcoperation.dao.implement;
 
 import com.coroda.mcoperation.dao.OperationDao;
 import com.coroda.mcoperation.model.api.request.*;
-import com.coroda.mcoperation.model.api.response.DetailResponse;
-import com.coroda.mcoperation.model.api.response.NewStyleResponse;
-import com.coroda.mcoperation.model.api.response.Response;
-import com.coroda.mcoperation.model.api.response.TypeOperationResponse;
+import com.coroda.mcoperation.model.api.response.*;
 import com.coroda.mcoperation.model.entity.*;
 import com.coroda.mcoperation.model.thirdparty.Person;
 import com.coroda.mcoperation.model.thirdparty.Product;
@@ -74,14 +71,14 @@ public class OperationDaoImplement implements OperationDao {
     @Override
     public Completable update(Request request) {
         log.info("actualizando y guardando los campos");
-        return maybeOperation(request.getId())
+        return maybeOperation(request.getOperationId())
                 .flatMapCompletable(operation -> save(request));
     }
 
     private Operation setOperacion(Request model) {
         log.info("seteo de datos de Quotation del metodo save");
         Operation op = new Operation();
-        op.setId(model.getId());
+        op.setOperationId(model.getOperationId());
         op.setTypeOperation(model.getTypeOperation());
         op.setDate(model.getDate());
         op.setNumberDocument(model.getNumberDocument());
@@ -100,7 +97,7 @@ public class OperationDaoImplement implements OperationDao {
         DetailOperation detailOp = new DetailOperation();
         detailOp.setOperationId(detail.getOperationId());
         detailOp.setModel(detail.getModel());
-        detailOp.setId(detail.getId());
+        detailOp.setDetailId(detail.getDetailId());
         detailOp.setQuantity(detail.getQuantity());
         detailOp.setNewStyleProduct(setNewStyleProduct(detail.getNewStyleProduct()));
         detailOp.setPriceUnit(getPriceUnitProduct(detail.getModel(),detail.getPriceUnit()));
@@ -117,8 +114,8 @@ public class OperationDaoImplement implements OperationDao {
 
     private NewStyleProduct setNewStyle(NewStyleRequest style) {
         NewStyleProduct newStyle = new NewStyleProduct();
-        newStyle.setDetailOperationId(style.getId());
-        newStyle.setId(style.getId());
+        newStyle.setDetailOperationId(style.getDetailOperationId());
+        newStyle.setNewStyleId(style.getNewStyleId());
         newStyle.setColor(style.getColor());
         newStyle.setDimention(style.getDimention());
         return newStyle;
@@ -128,7 +125,7 @@ public class OperationDaoImplement implements OperationDao {
     public Observable<Response>  getById(Long operationId) {
         log.info("Extrayendo reistros del Producto  acorde al modelo");
         return Observable.fromIterable(operationRepository.searchId(operationId))
-                .filter(obj -> obj.getId().equals(operationId))
+                .filter(obj -> obj.getOperationId().equals(operationId))
                 .map(operacion -> getOperation(operacion))
                 .subscribeOn(Schedulers.io());
     }
@@ -144,11 +141,12 @@ public class OperationDaoImplement implements OperationDao {
     private Response getOperation(Operation model) throws ParseException {
         log.info("Extrayendo reistros de OPERACION");
         Response op = new Response();
-        op.setOperationId(model.getId());
+        op.setOperationId(model.getOperationId());
         op.setTypeOperation(model.getTypeOperation());
         op.setDate(getFecha(model.getDate()));
-        op.setHora(getHora(model.getDate()));
-        op.setPerson(getListPerson(model.getNumberDocument()));
+        op.setHour(getHora(model.getDate()));
+        op.setNumberDocument(model.getNumberDocument());
+        op.setClient(getListPerson(model.getNumberDocument()));
         op.setDetail(getlistaDetail(model.getDetailOperacion()));
         return op;
     }
@@ -178,21 +176,22 @@ public class OperationDaoImplement implements OperationDao {
     private DetailResponse getDetail(DetailOperation detail) {
         DetailResponse dr = new DetailResponse();
         log.info("Extrayendo registros de Detalle");
-        dr.setDetailId(detail.getId());
+        dr.setDetailId(detail.getDetailId());
         dr.setOperationId(detail.getOperationId());
+        dr.setModel(detail.getModel());
         dr.setProduct(getProduct(detail.getModel()));
-        dr.setNewStyle(getNewStyle(detail.getNewStyleProduct()));
+        dr.setNewStyleProduct(getNewStyle(detail.getNewStyleProduct()));
         dr.setQuantity(detail.getQuantity());
         dr.setPriceUnit(detail.getPriceUnit());
         dr.setTotalDetailAmount(detail.getTotalProductPrice());
         return dr;
     }
 
-    public List<Product> getProduct(String model) {
+    public List<ProductResponse> getProduct(String model) {
         Map<String,String> modelProduct= new HashMap<String,String>();
         modelProduct.put("model",model);
         log.info("Extrayendo registros de Productos");
-        Product[] product= clienteRest.getForObject(mcProduct,Product[].class,modelProduct);
+        ProductResponse[] product= clienteRest.getForObject(mcProduct,ProductResponse[].class,modelProduct);
         return Arrays.asList(product);
     }
 
@@ -203,7 +202,7 @@ public class OperationDaoImplement implements OperationDao {
     }
     public NewStyleResponse newStyle(NewStyleProduct style) {
         NewStyleResponse nr = new NewStyleResponse();
-        nr.setNewStyleId(style.getId());
+        nr.setNewStyleId(style.getNewStyleId());
         nr.setDetailOperationId(style.getDetailOperationId());
         nr.setColor(style.getColor());
         nr.setDimention(style.getDimention());

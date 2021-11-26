@@ -5,10 +5,10 @@ import lombok.Data;
 @Data
 public class Person {
 
-    private long idPerson;
+//    private long idPerson;
     private String typeDocument;
     private String typePerson;
-    private long numberDocument;
+//    private long numberDocument;
     private String name;
     private String lastName1;
     private String lastName2;

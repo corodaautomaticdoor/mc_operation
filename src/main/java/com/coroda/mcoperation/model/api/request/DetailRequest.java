@@ -1,6 +1,5 @@
 package com.coroda.mcoperation.model.api.request;
 
-import com.coroda.mcoperation.model.thirdparty.Product;
 import io.swagger.annotations.ApiModel;
 import io.swagger.annotations.ApiModelProperty;
 import lombok.Data;
@@ -15,8 +14,8 @@ import java.util.List;
 @ApiModel("Model DetailRequest")
 public class DetailRequest {
 
-    @ApiModelProperty(value = "id", position = 1)
-    private Long id;
+    @ApiModelProperty(value = "detailId", position = 1)
+    private Long detailId;
 
     @ApiModelProperty(value = "operationId" , position = 2)
     private Long operationId;
@@ -34,12 +33,5 @@ public class DetailRequest {
     @ApiModelProperty(value = "priceUnit", required = true , position = 6)
     private BigDecimal priceUnit;
 
-    public BigDecimal getTotalDetailAmount() {
-        BigDecimal totalDetail = new BigDecimal(0.0).setScale(2);
-//        for (Product item : product) {
-            totalDetail = quantity.multiply(priceUnit).setScale(2);
-//        }
-        return totalDetail;
-    }
 
 }
