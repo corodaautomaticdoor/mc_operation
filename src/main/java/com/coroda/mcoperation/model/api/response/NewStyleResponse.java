@@ -9,7 +9,7 @@ import lombok.NoArgsConstructor;
 @NoArgsConstructor
 public class NewStyleResponse {
     private Long newStyleId;
-    private Long detailOperationId;
+//    private Long detailOperationId;
     private String color;
     private String dimention;
 }

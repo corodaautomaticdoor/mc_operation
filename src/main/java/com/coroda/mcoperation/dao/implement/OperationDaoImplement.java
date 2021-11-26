@@ -69,6 +69,7 @@ public class OperationDaoImplement implements OperationDao {
                         .<BadRequestException>orElseThrow(BadRequestException::new))
                 .switchIfEmpty(Maybe.empty());
     }
+
     @Override
     public Completable update(Request request) {
         log.info("actualizando y guardando los campos");
@@ -115,7 +116,6 @@ public class OperationDaoImplement implements OperationDao {
 
     private NewStyleProduct setNewStyle(NewStyleRequest style) {
         NewStyleProduct newStyle = new NewStyleProduct();
-        newStyle.setDetailOperationId(style.getDetailOperationId());
         newStyle.setNewStyleId(style.getNewStyleId());
         newStyle.setColor(style.getColor());
         newStyle.setDimention(style.getDimention());
@@ -154,10 +154,12 @@ public class OperationDaoImplement implements OperationDao {
         op.setDetail(getlistaDetail(model.getDetailOperacion()));
         return op;
     }
+
     public String getFecha(String date) throws ParseException {
         Date fecha = new SimpleDateFormat("dd-MM-yyyy hh:mm:ss").parse(date);
         return new SimpleDateFormat("EEEE dd 'de' MMMM 'del' YYYY").format(fecha);
     }
+
     public String getHora(String date) throws ParseException {
         Date hora = new SimpleDateFormat("dd-MM-yyyy hh:mm:ss").parse(date);
         return new SimpleDateFormat("hh:mm:ss a").format(hora);
@@ -191,13 +193,6 @@ public class OperationDaoImplement implements OperationDao {
         return dr;
     }
 
-    public List<ProductResponse> getProduct(String model) {
-        Map<String,String> modelProduct= new HashMap<String,String>();
-        modelProduct.put("model",model);
-        log.info("Extrayendo registros de Productos");
-        ProductResponse[] product= clienteRest.getForObject(mcProduct,ProductResponse[].class,modelProduct);
-        return Arrays.asList(product);
-    }
     public ProductResponse getProduct1(String model) {
         Map<String,String> modelProduct= new HashMap<String,String>();
         modelProduct.put("model",model);
@@ -211,10 +206,10 @@ public class OperationDaoImplement implements OperationDao {
                 .map(newStyleProduct -> newStyle(newStyleProduct))
                 .collect(Collectors.toList());
     }
+    
     public NewStyleResponse newStyle(NewStyleProduct style) {
         NewStyleResponse nr = new NewStyleResponse();
         nr.setNewStyleId(style.getNewStyleId());
-        nr.setDetailOperationId(style.getDetailOperationId());
         nr.setColor(style.getColor());
         nr.setDimention(style.getDimention());
         return nr;
@@ -236,6 +231,8 @@ public class OperationDaoImplement implements OperationDao {
         return Observable.fromIterable(operationRepository.searchClient(number))
                 .filter(objClient -> objClient.getNumberDocument().equals(number))
                 .map(operation -> getOperation(operation))
+                .switchIfEmpty(Observable
+                        .error( new ResourceNotFoundException("El cliente no tiene ninguna cotización")))
                 .subscribeOn(Schedulers.io());
     }
 
@@ -262,11 +259,11 @@ public class OperationDaoImplement implements OperationDao {
         Map<String,String> modelProduct= new HashMap<String,String>();
         modelProduct.put("model",model);
         log.info("Extrayendo precio unitario del Producto");
-        Product[] product= clienteRest.getForObject(mcProduct,Product[].class,modelProduct);
+        Product product= clienteRest.getForObject(mcProduct,Product.class,modelProduct);
         if(priceUnit != null ){
             return priceUnit;
         }
-        return Arrays.asList(product).stream().findFirst().get().getPriceUnit();
+        return product.getPriceUnit();
     }
 
     public BigDecimal calculateTotalProductPrice(BigDecimal quantity, BigDecimal priceUnitProduct) {

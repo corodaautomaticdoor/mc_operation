@@ -76,6 +76,11 @@ public class OperationServiceImplement implements OperationService {
     }
 
     @Override
+    public Observable<Response> searchClient(String numberDocument) {
+        return operationDao.searchClient(numberDocument);
+    }
+
+    @Override
     public Observable<TypeOperationResponse> updateType(Long id, TypeOperationRequest typeOperationRequest) {
         return operationDao.updateType(id, typeOperationRequest);
     }

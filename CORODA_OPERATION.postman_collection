@@ -1,6 +1,6 @@
 {
 	"info": {
-		"_postman_id": "19468415-4373-400d-be28-2444e9615d2f",
+		"_postman_id": "fb426faf-2749-453d-80f1-167c96952b2e",
 		"name": "OPERATION",
 		"schema": "https://schema.getpostman.com/json/collection/v2.1.0/collection.json"
 	},
@@ -12,7 +12,7 @@
 				"header": [],
 				"body": {
 					"mode": "raw",
-					"raw": "\r\n{\r\n  \"typeOperation\": 0,\r\n  \"numberDocument\": 71723707,\r\n  \"detail\": [\r\n\r\n    {\r\n      \"model\": \"PG02\",\r\n      \"quantity\": 3\r\n    }\r\n  ]\r\n}",
+					"raw": "{\r\n  \"typeOperation\": 0,\r\n  \"numberDocument\": 74593040,\r\n  \"detail\": [\r\n    {\r\n      \"model\": \"PG01\",\r\n      \"quantity\": 5,\r\n      \"newStyleProduct\": [\r\n        {\r\n          \"color\": \"rojo\",\r\n          \"dimention\": \"10 m x 4 m\"\r\n        }\r\n      ]\r\n    },\r\n    {\r\n      \"model\": \"CP01\",\r\n      \"quantity\": 2,\r\n      \"newStyleProduct\": []\r\n    },\r\n    {\r\n      \"model\": \"MT01\",\r\n      \"quantity\": 1,\r\n      \"newStyleProduct\": []\r\n    },\r\n    {\r\n      \"model\": \"PG02\",\r\n      \"quantity\": 3,\r\n      \"newStyleProduct\": [\r\n        {\r\n          \"color\": \"rojo\",\r\n          \"dimention\": \"10 m x 4 m\"\r\n        }\r\n      ]\r\n    }\r\n  ]\r\n}",
 					"options": {
 						"raw": {
 							"language": "json"
@@ -28,85 +28,6 @@
 					"port": "8020",
 					"path": [
 						"operation"
-					]
-				}
-			},
-			"response": []
-		},
-		{
-			"name": "Elimina Operacion",
-			"request": {
-				"method": "DELETE",
-				"header": [],
-				"url": {
-					"raw": "http://localhost:8020/operation/3",
-					"protocol": "http",
-					"host": [
-						"localhost"
-					],
-					"port": "8020",
-					"path": [
-						"operation",
-						"3"
-					]
-				}
-			},
-			"response": []
-		},
-		{
-			"name": "Actualiza Operacion",
-			"request": {
-				"method": "PUT",
-				"header": [],
-				"body": {
-					"mode": "raw",
-					"raw": "{\r\n  \"operationId\": 4,\r\n  \"typeOperation\": 1,\r\n  \"numberDocument\": 71723707,\r\n  \"detail\": [\r\n    {\r\n      \"detailOperationId\": 5,\r\n      \"id\": 4,\r\n      \"model\": \"PG01\",\r\n      \"quantity\": 3\r\n    }\r\n  ]\r\n}",
-					"options": {
-						"raw": {
-							"language": "json"
-						}
-					}
-				},
-				"url": {
-					"raw": "http://localhost:8020/operation/4",
-					"protocol": "http",
-					"host": [
-						"localhost"
-					],
-					"port": "8020",
-					"path": [
-						"operation",
-						"4"
-					]
-				}
-			},
-			"response": []
-		},
-		{
-			"name": "Actualizar solo Tipo de Operacion",
-			"request": {
-				"method": "PUT",
-				"header": [],
-				"body": {
-					"mode": "raw",
-					"raw": "{\r\n  \"typeOperation\": 0\r\n}",
-					"options": {
-						"raw": {
-							"language": "json"
-						}
-					}
-				},
-				"url": {
-					"raw": "http://localhost:8020/operation/type/1",
-					"protocol": "http",
-					"host": [
-						"localhost"
-					],
-					"port": "8020",
-					"path": [
-						"operation",
-						"type",
-						"1"
 					]
 				}
 			},
@@ -133,6 +54,55 @@
 			"response": []
 		},
 		{
+			"name": "Actualiza Operacion",
+			"request": {
+				"method": "PUT",
+				"header": [],
+				"body": {
+					"mode": "raw",
+					"raw": "{\r\n    \"operationId\": 1,\r\n    \"typeOperation\": \"Quotation\",\r\n    \"numberDocument\": 74593040,\r\n    \"detail\": [\r\n        {\r\n            \"detailId\": 1,\r\n            \"operationId\": 1,\r\n            \"model\": \"PG01\",\r\n            \"newStyleProduct\": [\r\n                {\r\n                    \"newStyleId\": 1,\r\n                    \"color\": \"rojo\",\r\n                    \"dimention\": \"10 m x 4 m\"\r\n                }\r\n            ],\r\n            \"quantity\": 5.00,\r\n            \"priceUnit\": 1200.00\r\n        },\r\n        {\r\n            \"detailId\": 2,\r\n            \"operationId\": 1,\r\n            \"model\": \"CP01\",\r\n            \"newStyleProduct\": [],\r\n            \"quantity\": 2.00\r\n        },\r\n        {\r\n            \"detailId\": 3,\r\n            \"operationId\": 1,\r\n            \"model\": \"MT01\",\r\n            \"newStyleProduct\": [],\r\n            \"quantity\": 1.00\r\n        },\r\n        {\r\n            \"detailId\": 4,\r\n            \"operationId\": 1,\r\n            \"model\": \"PG02\",\r\n            \"newStyleProduct\": [\r\n                {\r\n                    \"newStyleId\": 4,\r\n                    \"color\": \"rojo\",\r\n                    \"dimention\": \"10 m x 4 m\"\r\n                }\r\n            ],\r\n            \"quantity\": 3.00,\r\n            \"priceUnit\": 1000.00\r\n        }\r\n    ]\r\n}",
+					"options": {
+						"raw": {
+							"language": "json"
+						}
+					}
+				},
+				"url": {
+					"raw": "http://localhost:8020/operation/1",
+					"protocol": "http",
+					"host": [
+						"localhost"
+					],
+					"port": "8020",
+					"path": [
+						"operation",
+						"1"
+					]
+				}
+			},
+			"response": []
+		},
+		{
+			"name": "Elimina Operacion",
+			"request": {
+				"method": "DELETE",
+				"header": [],
+				"url": {
+					"raw": "http://localhost:8020/operation/3",
+					"protocol": "http",
+					"host": [
+						"localhost"
+					],
+					"port": "8020",
+					"path": [
+						"operation",
+						"3"
+					]
+				}
+			},
+			"response": []
+		},
+		{
 			"name": "Listar Operacion",
 			"request": {
 				"method": "GET",
@@ -152,12 +122,90 @@
 			"response": []
 		},
 		{
+			"name": "Buscar Cotizaciones por cliente",
+			"request": {
+				"method": "GET",
+				"header": [],
+				"url": {
+					"raw": "http://localhost:8020/operation/search-number-document/74593040",
+					"protocol": "http",
+					"host": [
+						"localhost"
+					],
+					"port": "8020",
+					"path": [
+						"operation",
+						"search-number-document",
+						"74593040"
+					]
+				}
+			},
+			"response": []
+		},
+		{
+			"name": "Post Operation Request 2",
+			"request": {
+				"method": "POST",
+				"header": [],
+				"body": {
+					"mode": "raw",
+					"raw": "{\r\n  \"typeOperation\": 0,\r\n  \"numberDocument\": 27718216,\r\n  \"detail\": [\r\n    {\r\n      \"model\": \"MT01\",\r\n      \"quantity\": 3,\r\n      \"newStyleProduct\": []\r\n    }\r\n  ]\r\n}",
+					"options": {
+						"raw": {
+							"language": "json"
+						}
+					}
+				},
+				"url": {
+					"raw": "http://localhost:8020/operation",
+					"protocol": "http",
+					"host": [
+						"localhost"
+					],
+					"port": "8020",
+					"path": [
+						"operation"
+					]
+				}
+			},
+			"response": []
+		},
+		{
+			"name": "Actualiza Operacion 2",
+			"request": {
+				"method": "PUT",
+				"header": [],
+				"body": {
+					"mode": "raw",
+					"raw": "\r\n{\r\n    \"operationId\": 2,\r\n    \"typeOperation\": 0,\r\n    \"numberDocument\": 27718216,\r\n    \"detail\": [\r\n        {\r\n            \"detailId\": 5,\r\n            \"operationId\": 2,\r\n            \"model\": \"MT01\",\r\n            \"newStyleProduct\": [],\r\n            \"quantity\": 3.00,\r\n            \"priceUnit\": 1200.00\r\n        }\r\n    ]\r\n}",
+					"options": {
+						"raw": {
+							"language": "json"
+						}
+					}
+				},
+				"url": {
+					"raw": "http://localhost:8020/operation/1",
+					"protocol": "http",
+					"host": [
+						"localhost"
+					],
+					"port": "8020",
+					"path": [
+						"operation",
+						"1"
+					]
+				}
+			},
+			"response": []
+		},
+		{
 			"name": "Filtrar_TipoOperacion_Cliente",
 			"request": {
 				"method": "GET",
 				"header": [],
 				"url": {
-					"raw": "http://localhost:8020/operation?numberDocument=71723707&type=Quotation",
+					"raw": "http://localhost:8020/operation?numberDocument=74593040",
 					"protocol": "http",
 					"host": [
 						"localhost"
@@ -173,18 +221,18 @@
 							"disabled": true
 						},
 						{
-							"key": "numberDocument",
-							"value": "71723707"
+							"key": "type",
+							"value": "Quotation",
+							"disabled": true
 						},
 						{
-							"key": "type",
-							"value": "Quotation"
+							"key": "numberDocument",
+							"value": "74593040"
 						}
 					]
 				}
 			},
 			"response": []
 		}
-	],
-	"protocolProfileBehavior": {}
+	]
 }

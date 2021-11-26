@@ -9,6 +9,7 @@ import com.coroda.mcoperation.util.Constants;
 import io.reactivex.Completable;
 import io.reactivex.Maybe;
 import io.reactivex.Observable;
+import io.reactivex.ObservableSource;
 import io.swagger.annotations.Api;
 import io.swagger.annotations.ApiOperation;
 import lombok.extern.slf4j.Slf4j;
@@ -68,10 +69,10 @@ public class OperationController {
         return operationService.updateType(id, typeOperationRequest);
     }
 
-    @PutMapping(Constants.UPDATE_QUOTATION)
-    @ApiOperation(value = Constants.UPDATE_ID_VALUE, notes = Constants.UPDATE_ID_NOTE)
-    public Completable update2(@RequestBody Request request) {
+    @GetMapping(Constants.SEARCH_NUMBER_DOCUMENT)
+    @ApiOperation(value = Constants.GET_NUMBER_DOCUMENT_VALUE, notes = Constants.GET_NUMBER_DOCUMENT_NOTE)
+    public ObservableSource<Response> searchClient(@PathVariable("numberDocument") String numberDocument) {
         log.info("Actualizacion de parametros");
-        return operationService.update(request);
+        return operationService.searchClient(numberDocument);
     }
 }

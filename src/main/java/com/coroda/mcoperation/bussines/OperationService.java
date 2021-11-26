@@ -19,6 +19,7 @@ public interface OperationService {
     Maybe<Response> getById (Long operationId);
 
     Observable<Response> getData(Map<String, String> params);
+    Observable<Response> searchClient(String numberDocument);
     Observable<TypeOperationResponse> updateType(Long id , TypeOperationRequest typeOperationRequest);
 
 }

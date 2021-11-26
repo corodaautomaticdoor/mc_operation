@@ -6,6 +6,7 @@ import lombok.Data;
 
 import javax.persistence.CascadeType;
 import javax.persistence.FetchType;
+import javax.persistence.ManyToOne;
 import javax.persistence.OneToMany;
 import java.math.BigDecimal;
 import java.util.List;
@@ -27,8 +28,10 @@ public class DetailRequest {
     private BigDecimal quantity;
 
     @OneToMany(cascade = CascadeType.ALL, fetch = FetchType.EAGER)
+//    @ManyToOne(cascade = CascadeType.ALL, fetch = FetchType.EAGER)
     @ApiModelProperty(position = 5)
     private List<NewStyleRequest> newStyleProduct;
+//    private NewStyleRequest newStyleProduct;
 
     @ApiModelProperty(value = "priceUnit", required = true , position = 6)
     private BigDecimal priceUnit;

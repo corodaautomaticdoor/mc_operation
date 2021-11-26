@@ -4,7 +4,7 @@ public class Constants {
 
     public final static String MAIN_PATH = "/operation";
     public final static String ID = "/{id}";
-    public final static String UPDATE_QUOTATION = "/quotation/{id}";
+    public final static String SEARCH_NUMBER_DOCUMENT = "/search-number-document/{numberDocument}";
     public final static String TYPE = "/type/{id}";
 
     public final static String SUCCESS = "SUCCESS";
@@ -24,6 +24,8 @@ public class Constants {
     public final static String UPDATE_TYPEOPERATION_VALUE="Metodo a traves del cual se Actualizara el tipo de  Operacion";
     public final static String UPDATE_TYPEOPERATION_NOTE="Para Actualizar el tipo de  Operacion sera necesario el envio del ID y especificar que tipo de operacion sera";
 
+    public final static String GET_NUMBER_DOCUMENT_VALUE="Metodo a traves del cual se Obtiene la informacion de la  Operacion mediante el Número de Documento del Cliente.";
+    public final static String GET_NUMBER_DOCUMENT_NOTE="Para la obtencion de datos de una  Operacion , sera necesario enviar el Número de Documento del Cliente a consultar.";
     //RETROFIT
     public final static String URL_MCPRODUCT = "http://localhost:8021";
     public final static String URL_MCPERSON = "http://localhost:8022";

@@ -19,6 +19,7 @@ public class DetailResponse {
 //    private List<ProductResponse> product;
     private ProductResponse product;
     private List<NewStyleResponse> newStyleProduct;
+//    private NewStyleResponse newStyleProduct;
     private BigDecimal quantity;
     private BigDecimal priceUnit;
     private BigDecimal totalDetailAmount;
