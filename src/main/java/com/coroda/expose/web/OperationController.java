@@ -7,6 +7,7 @@ import com.coroda.mcoperation.model.api.response.Response;
 import com.coroda.mcoperation.model.api.response.TypeOperationResponse;
 import com.coroda.mcoperation.util.Constants;
 import io.reactivex.Completable;
+import io.reactivex.Maybe;
 import io.reactivex.Observable;
 import io.swagger.annotations.Api;
 import io.swagger.annotations.ApiOperation;
@@ -48,7 +49,7 @@ public class OperationController {
 
     @GetMapping(Constants.ID)
     @ApiOperation(value = Constants.GET_ID_VALUE, notes = Constants.GET_ID_NOTE)
-    public Observable<Response> getById(@PathVariable("id") Long operationId) {
+    public Maybe<Response> getById(@PathVariable("id") Long operationId) {
         log.info("Obtencion de datos por id");
         return operationService.getById(operationId);
     }

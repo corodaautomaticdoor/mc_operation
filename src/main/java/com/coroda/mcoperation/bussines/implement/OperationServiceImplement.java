@@ -8,6 +8,7 @@ import com.coroda.mcoperation.model.api.response.Response;
 import com.coroda.mcoperation.model.api.response.TypeOperationResponse;
 import com.coroda.mcoperation.model.entity.TypeOperation;
 import io.reactivex.Completable;
+import io.reactivex.Maybe;
 import io.reactivex.Observable;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -38,7 +39,7 @@ public class OperationServiceImplement implements OperationService {
     }
 
     @Override
-    public Observable<Response> getById(Long operationId) {
+    public Maybe<Response> getById(Long operationId) {
         return operationDao.getById(operationId);
     }
 

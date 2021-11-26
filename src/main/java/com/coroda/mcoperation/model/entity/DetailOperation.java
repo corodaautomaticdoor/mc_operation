@@ -30,8 +30,10 @@ public class DetailOperation {
     private BigDecimal quantity;
 
     @OneToMany(cascade = CascadeType.ALL, fetch = FetchType.EAGER)
+//    @ManyToOne(cascade = CascadeType.ALL, fetch = FetchType.EAGER)
     @JoinColumn(name = "detailOperationId")
     private List<NewStyleProduct>  newStyleProduct;
+//    private NewStyleProduct  newStyleProduct;
 
     @Column(name = "priceUnit")
     private BigDecimal priceUnit;

@@ -6,6 +6,7 @@ import com.coroda.mcoperation.model.api.response.Response;
 import com.coroda.mcoperation.model.api.response.TypeOperationResponse;
 import com.coroda.mcoperation.model.entity.TypeOperation;
 import io.reactivex.Completable;
+import io.reactivex.Maybe;
 import io.reactivex.Observable;
 
 public interface OperationDao {
@@ -13,7 +14,7 @@ public interface OperationDao {
     Completable save(Request request);
     Completable delete(Long operationId);
     Completable update(Request request);
-    Observable<Response> getById(Long operationId);
+    Maybe<Response> getById(Long operationId);
     Observable<Response> findAll();
 
     Observable<Response> searchTypeOperation(TypeOperation typeOperation);

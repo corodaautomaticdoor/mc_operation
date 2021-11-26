@@ -1,6 +1,7 @@
 package com.coroda.mcoperation.dao.implement;
 
 import com.coroda.mcoperation.dao.OperationDao;
+import com.coroda.mcoperation.exception.ResourceNotFoundException;
 import com.coroda.mcoperation.model.api.request.*;
 import com.coroda.mcoperation.model.api.response.*;
 import com.coroda.mcoperation.model.entity.*;
@@ -122,11 +123,14 @@ public class OperationDaoImplement implements OperationDao {
     }
 
     @Override
-    public Observable<Response>  getById(Long operationId) {
+    public Maybe<Response>  getById(Long operationId) {
         log.info("Extrayendo reistros del Producto  acorde al modelo");
         return Observable.fromIterable(operationRepository.searchId(operationId))
                 .filter(obj -> obj.getOperationId().equals(operationId))
                 .map(operacion -> getOperation(operacion))
+                .firstElement()
+                .switchIfEmpty(Maybe
+                        .error( new ResourceNotFoundException("Identificador de Operacion incorrecto")))
                 .subscribeOn(Schedulers.io());
     }
 
@@ -146,7 +150,7 @@ public class OperationDaoImplement implements OperationDao {
         op.setDate(getFecha(model.getDate()));
         op.setHour(getHora(model.getDate()));
         op.setNumberDocument(model.getNumberDocument());
-        op.setClient(getListPerson(model.getNumberDocument()));
+        op.setClient(getPerson(model.getNumberDocument()));
         op.setDetail(getlistaDetail(model.getDetailOperacion()));
         return op;
     }
@@ -159,7 +163,7 @@ public class OperationDaoImplement implements OperationDao {
         return new SimpleDateFormat("hh:mm:ss a").format(hora);
     }
 
-    public Person getListPerson(Long numberDocument) {
+    public Person getPerson(Long numberDocument) {
         Map<String,String> pathVariables3= new HashMap<String,String>();
         pathVariables3.put("numberDocument",numberDocument.toString());
         log.info("Extrayendo registros de Cliente");
@@ -179,7 +183,7 @@ public class OperationDaoImplement implements OperationDao {
         dr.setDetailId(detail.getDetailId());
         dr.setOperationId(detail.getOperationId());
         dr.setModel(detail.getModel());
-        dr.setProduct(getProduct(detail.getModel()));
+        dr.setProduct(getProduct1(detail.getModel()));
         dr.setNewStyleProduct(getNewStyle(detail.getNewStyleProduct()));
         dr.setQuantity(detail.getQuantity());
         dr.setPriceUnit(detail.getPriceUnit());
@@ -193,6 +197,13 @@ public class OperationDaoImplement implements OperationDao {
         log.info("Extrayendo registros de Productos");
         ProductResponse[] product= clienteRest.getForObject(mcProduct,ProductResponse[].class,modelProduct);
         return Arrays.asList(product);
+    }
+    public ProductResponse getProduct1(String model) {
+        Map<String,String> modelProduct= new HashMap<String,String>();
+        modelProduct.put("model",model);
+        log.info("Extrayendo registros de Productos");
+        ProductResponse product= clienteRest.getForObject(mcProduct,ProductResponse.class,modelProduct);
+        return product;
     }
 
     public List<NewStyleResponse> getNewStyle(List<NewStyleProduct> list) {
@@ -247,8 +258,6 @@ public class OperationDaoImplement implements OperationDao {
                 .subscribeOn(Schedulers.io());
     }
 
-
-
     public BigDecimal getPriceUnitProduct(String model, BigDecimal priceUnit) {
         Map<String,String> modelProduct= new HashMap<String,String>();
         modelProduct.put("model",model);
@@ -259,14 +268,6 @@ public class OperationDaoImplement implements OperationDao {
         }
         return Arrays.asList(product).stream().findFirst().get().getPriceUnit();
     }
-
-//    public BigDecimal calculateTotalAmount() {
-//        BigDecimal totalDetail = new BigDecimal(0.0).setScale(2);
-//        for (Product item : product) {
-//            totalDetail = quantity.multiply(item.getPriceUnit()).setScale(2);
-//        }
-//        return totalDetail;
-//    }
 
     public BigDecimal calculateTotalProductPrice(BigDecimal quantity, BigDecimal priceUnitProduct) {
         BigDecimal totalDetail = new BigDecimal(0.0).setScale(2);
