@@ -206,7 +206,7 @@ public class OperationDaoImplement implements OperationDao {
                 .map(newStyleProduct -> newStyle(newStyleProduct))
                 .collect(Collectors.toList());
     }
-    
+
     public NewStyleResponse newStyle(NewStyleProduct style) {
         NewStyleResponse nr = new NewStyleResponse();
         nr.setNewStyleId(style.getNewStyleId());
