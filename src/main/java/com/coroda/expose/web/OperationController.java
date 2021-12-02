@@ -17,6 +17,7 @@ import org.springframework.web.bind.annotation.*;
 import java.util.Map;
 
 @RestController
+@CrossOrigin(origins = "*")
 @RequestMapping(Constants.MAIN_PATH)
 @Api(tags = "Microservicio Operation", description = "Esta API se encarga de la gestion de las Operaciones")
 @Slf4j
