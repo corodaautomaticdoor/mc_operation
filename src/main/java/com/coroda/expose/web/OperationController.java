@@ -42,6 +42,7 @@ public class OperationController {
         return operationService.delete(operationId);
     }
 
+    @CrossOrigin
     @PutMapping(Constants.ID)
     @ApiOperation(value = Constants.UPDATE_ID_VALUE, notes = Constants.UPDATE_ID_NOTE)
     public Completable update(@RequestBody Request request) {
