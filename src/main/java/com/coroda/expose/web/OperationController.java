@@ -50,6 +50,7 @@ public class OperationController {
         return operationService.update(request);
     }
 
+    @CrossOrigin
     @GetMapping(Constants.ID)
     @ApiOperation(value = Constants.GET_ID_VALUE, notes = Constants.GET_ID_NOTE)
     public Maybe<Response> getById(@PathVariable("id") Long operationId) {
