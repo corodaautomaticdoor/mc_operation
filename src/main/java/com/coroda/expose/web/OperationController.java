@@ -43,7 +43,7 @@ public class OperationController {
     }
 
     @CrossOrigin
-    @PutMapping(Constants.ID)
+    @PutMapping(Constants.UPDATE_OPERATION)
     @ApiOperation(value = Constants.UPDATE_ID_VALUE, notes = Constants.UPDATE_ID_NOTE)
     public Completable update(@RequestBody Request request) {
         log.info("Actualizacion de parametros");
