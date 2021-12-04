@@ -42,13 +42,15 @@ public class OperationController {
         return operationService.delete(operationId);
     }
 
-    @PutMapping(Constants.ID)
+    @CrossOrigin
+    @PutMapping(Constants.UPDATE_OPERATION)
     @ApiOperation(value = Constants.UPDATE_ID_VALUE, notes = Constants.UPDATE_ID_NOTE)
     public Completable update(@RequestBody Request request) {
         log.info("Actualizacion de parametros");
         return operationService.update(request);
     }
 
+    @CrossOrigin
     @GetMapping(Constants.ID)
     @ApiOperation(value = Constants.GET_ID_VALUE, notes = Constants.GET_ID_NOTE)
     public Maybe<Response> getById(@PathVariable("id") Long operationId) {
