@@ -30,7 +30,7 @@ public class DetailOperation {
     private BigDecimal quantity;
 
     @OneToMany(cascade = CascadeType.ALL, fetch = FetchType.EAGER)
-    @JoinColumn(name = "newStyleId")
+    @JoinColumn(name = "detailOperationId")
     private List<NewStyleProduct>  newStyleProduct;
 
     @Column(name = "priceUnit")
