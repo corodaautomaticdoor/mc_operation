@@ -117,6 +117,7 @@ public class OperationDaoImplement implements OperationDao {
     private NewStyleProduct setNewStyle(NewStyleRequest style) {
         NewStyleProduct newStyle = new NewStyleProduct();
         newStyle.setNewStyleId(style.getNewStyleId());
+        newStyle.setDetailOperationId(style.getDetailOperationId());
         newStyle.setColor(style.getColor());
         newStyle.setDimention(style.getDimention());
         return newStyle;
