@@ -11,8 +11,8 @@ public class NewStyleRequest {
     @ApiModelProperty(value = "newStyleId", position = 1)
     private Long newStyleId;
 
-//    @ApiModelProperty(value = "detailOperationId" , position = 2)
-//    private Long detailOperationId;
+    @ApiModelProperty(value = "detailOperationId" , position = 2)
+    private Long detailOperationId;
 
     @ApiModelProperty(value = "color", position = 3)
     private String color;
